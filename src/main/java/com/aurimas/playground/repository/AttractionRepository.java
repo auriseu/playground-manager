@@ -38,8 +38,8 @@ public class AttractionRepository {
         .toList();
   }
 
-  public int update(Attraction attraction) {
-    return dsl.update(ATTRACTION)
+  public void update(Attraction attraction) {
+    dsl.update(ATTRACTION)
         .set(ATTRACTION.NAME, attraction.name())
         .set(ATTRACTION.MAX_CAPACITY, attraction.maxCapacity())
         .where(ATTRACTION.ID.eq(attraction.id()))
