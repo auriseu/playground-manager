@@ -1,0 +1,114 @@
+@baseUrl = http://localhost:8080/api
+
+### Create Playsite
+POST {{baseUrl}}/v1/playsites
+Content-Type: application/json
+
+{
+  "name": "Playsite 1"
+}
+
+> {%
+    client.global.set("playsite1", response.body.id);
+%}
+
+### Create Attractions
+POST {{baseUrl}}/v1/attractions
+Content-Type: application/json
+
+[
+  {
+    "name": "Swing",
+    "maxCapacity": 1
+  },
+  {
+    "name": "Carousel",
+    "maxCapacity": 3
+  },
+  {
+    "name": "Slide",
+    "maxCapacity": 4
+  },
+  {
+    "name": "Ball pit",
+    "maxCapacity": 5
+  }
+]
+
+> {%
+    client.global.set("attractions", response.body);
+%}
+
+### Add 2 of each attractions to playsite
+< {%
+    const attractions = client.global.get("attractions");
+
+    let allAttractions = [];
+    for (let i = 0; i < attractions.length; i++) {
+        allAttractions.push({
+            attractionId: attractions[i].id,
+            amount: 2
+        });
+    }
+
+    request.variables.set("attractionsWithAmounts", JSON.stringify(allAttractions))
+%}
+POST {{baseUrl}}/v1/playsites/{{playsite1}}/attractions
+Content-Type: application/json
+
+
+{{attractionsWithAmounts}}
+
+### Create customer 1
+POST {{baseUrl}}/v1/customers
+Content-Type: application/json
+
+{
+  "name": "John",
+  "age": 18
+}
+
+> {%
+    client.global.set("customer1", response.body.ticketNumber);
+%}
+
+### Create customer 2
+POST {{baseUrl}}/v1/customers
+Content-Type: application/json
+
+{
+  "name": "Michael",
+  "age": 25
+}
+
+> {%
+    client.global.set("customer2", response.body.ticketNumber);
+%}
+
+### Create customer 3
+POST {{baseUrl}}/v1/customers
+Content-Type: application/json
+
+{
+  "name": "Bob",
+  "age": 60
+}
+
+> {%
+    client.global.set("customer3", response.body.ticketNumber);
+%}
+
+### Add customer 1 to playsite
+POST {{baseUrl}}/v1/playsites/{{playsite1}}/customers/{{customer1}}?waitInQueue=true
+
+### Add customer 2 to playsite
+POST {{baseUrl}}/v1/playsites/{{playsite1}}/customers/{{customer2}}?waitInQueue=false
+
+### Add customer 3 to playsite
+POST {{baseUrl}}/v1/playsites/{{playsite1}}/customers/{{customer3}}?waitInQueue=false
+
+
+
+
+
+

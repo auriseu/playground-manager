@@ -1,0 +1,44 @@
+@baseUrl = http://localhost:8080/api
+
+### Create Attractions
+POST {{baseUrl}}/v1/attractions
+Content-Type: application/json
+
+[{
+  "name": "Swing",
+  "maxCapacity": 1
+
+}]
+
+> {%
+    client.global.set("newAttractionId", response.body[0].id);
+%}
+
+### Update Attraction
+PUT {{baseUrl}}/v1/attractions/{{newAttractionId}}
+Content-Type: application/json
+
+{
+  "name": "Swing - Ultimate",
+  "maxCapacity": 1
+}
+
+### Get Attraction
+GET {{baseUrl}}/v1/attractions/{{newAttractionId}}
+
+### Get all Attractions
+GET {{baseUrl}}/v1/attractions
+
+### Delete Attraction
+DELETE {{baseUrl}}/v1/attractions/{{newAttractionId}}
+
+### Try to create invalid Attraction
+POST {{baseUrl}}/v1/attractions
+Content-Type: application/json
+
+[{
+  "name": "Swing - Invalid",
+  "maxCapacity": 0
+}]
+
+

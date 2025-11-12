@@ -1,0 +1,22 @@
+@baseUrl = http://localhost:8080/api
+
+### Create Customer
+POST {{baseUrl}}/v1/customers
+Content-Type: application/json
+
+{
+  "name": "John",
+  "age": 18
+}
+
+> {%
+    client.global.set("ticketNumber", response.body.ticketNumber);
+%}
+
+### Get Customer
+GET {{baseUrl}}/v1/customers/{{ticketNumber}}
+
+### Delete Customer
+DELETE {{baseUrl}}/v1/customers/{{ticketNumber}}
+
+
