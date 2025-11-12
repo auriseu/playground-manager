@@ -96,18 +96,18 @@ public class PlaysiteRepository {
   }
 
   public Optional<PlaysiteInfo> getPlaysiteInfoById(Long playsiteId) {
-    var PA = PLAYSITE_ATTRACTIONS.as("pa");
-    var A = ATTRACTION.as("a");
-    var PC = PLAYSITE_CUSTOMERS.as("pc");
+    var playsiteAttractions = PLAYSITE_ATTRACTIONS.as("pa");
+    var attraction = ATTRACTION.as("a");
+    var playsiteCustomers = PLAYSITE_CUSTOMERS.as("pc");
 
-    var maxCapacitySubquery = DSL.select(DSL.sum(A.MAX_CAPACITY.mul(PA.AMOUNT)))
-        .from(A)
-        .join(PA).on(PA.ATTRACTION.eq(A.ID))
-        .where(PA.PLAYSITE.eq(PLAYSITE.ID));
+    var maxCapacitySubquery = DSL.select(DSL.sum(attraction.MAX_CAPACITY.mul(playsiteAttractions.AMOUNT)))
+        .from(attraction)
+        .join(playsiteAttractions).on(playsiteAttractions.ATTRACTION.eq(attraction.ID))
+        .where(playsiteAttractions.PLAYSITE.eq(PLAYSITE.ID));
 
     var currentVisitorSubquery = DSL.selectCount()
-        .from(PC)
-        .where(PC.PLAYSITE.eq(PLAYSITE.ID));
+        .from(playsiteCustomers)
+        .where(playsiteCustomers.PLAYSITE.eq(PLAYSITE.ID));
 
     var maxCapacityField = DSL.field(maxCapacitySubquery).as("maxCapacity").convertFrom(BigDecimal::intValue);
     var visitorCountField = DSL.field(currentVisitorSubquery).as("currentVisitorCount").convertFrom(Integer::intValue);
@@ -121,14 +121,14 @@ public class PlaysiteRepository {
 
     var attractions = DSL.multiset(
         dsl.select(
-                A.ID.as("attractionId"),
-                A.NAME,
-                A.MAX_CAPACITY,
-                PA.AMOUNT.as("amountInPlaysite")
+                attraction.ID.as("attractionId"),
+                attraction.NAME,
+                attraction.MAX_CAPACITY,
+                playsiteAttractions.AMOUNT.as("amountInPlaysite")
             )
-            .from(PA)
-            .join(A).on(PA.ATTRACTION.eq(A.ID))
-            .where(PA.PLAYSITE.eq(PLAYSITE.ID))
+            .from(playsiteAttractions)
+            .join(attraction).on(playsiteAttractions.ATTRACTION.eq(attraction.ID))
+            .where(playsiteAttractions.PLAYSITE.eq(PLAYSITE.ID))
     ).as("attractions").convertFrom(r -> r.into(AttractionDetails.class));
 
     return dsl.select(
@@ -144,10 +144,10 @@ public class PlaysiteRepository {
         .fetchOptional(Records.mapping(PlaysiteInfo::new));
   }
 
-  private Playsite map(PlaysiteRecord record) {
+  private Playsite map(PlaysiteRecord row) {
     return new Playsite(
-        record.getId(),
-        record.getName()
+        row.getId(),
+        row.getName()
     );
   }
 }

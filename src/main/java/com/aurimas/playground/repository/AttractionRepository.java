@@ -78,11 +78,11 @@ public class AttractionRepository {
     return existingCount != null ? existingCount : 0;
   }
 
-  private Attraction mapRecordToDomain(AttractionRecord record) {
+  private Attraction mapRecordToDomain(AttractionRecord row) {
     return new Attraction(
-        record.getId(),
-        record.getName(),
-        record.getMaxCapacity()
+        row.getId(),
+        row.getName(),
+        row.getMaxCapacity()
     );
   }
 }

@@ -44,11 +44,11 @@ public class CustomerRepository {
         .execute();
   }
 
-  private Customer mapRecordToDomain(CustomerRecord record) {
+  private Customer mapRecordToDomain(CustomerRecord row) {
     return new Customer(
-        record.getId(),
-        record.getName(),
-        record.getAge()
+        row.getId(),
+        row.getName(),
+        row.getAge()
     );
   }
 }
