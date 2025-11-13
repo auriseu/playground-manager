@@ -7,6 +7,7 @@ import com.aurimas.playground.domain.PlaysiteInfo;
 import com.aurimas.playground.service.PlaysiteAttractionService;
 import com.aurimas.playground.service.PlaysiteCustomerService;
 import com.aurimas.playground.service.PlaysiteService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/playsites")
+@Tag(name = "Playsite controller")
 public class PlaysiteController {
 
   private final PlaysiteService playsiteService;

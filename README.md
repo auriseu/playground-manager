@@ -4,19 +4,21 @@
 * To verify application tests run command `./mvnw clean verify`
 * To start application run command `./mvnw spring-boot:run`
 
+### Tests and documentation
+* You can test API requests in file [requests.http](src/http/create-test-data.http) or use [swagger](http://localhost:8080/swagger-ui/index.html)
+
 ### Tech stack
 * Java
 * Spring boot
 * JOOQ
 * Flyway
 * H2
-
-### Usage
+* OpenAPI
 
 ### Todo
 * Security
 * Support for multiple playgrounds
-* Improve jakarta validation error handling
+* Improve jakarta validations and error handling
 
 ### Task
 Create a playground REST API

@@ -2,6 +2,7 @@ package com.aurimas.playground.controller;
 
 import com.aurimas.playground.domain.Customer;
 import com.aurimas.playground.service.CustomerService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/customers")
 @Validated
+@Tag(name = "Customer controller")
 public class CustomerController {
 
   private final CustomerService customerService;

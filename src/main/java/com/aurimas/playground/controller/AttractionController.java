@@ -2,6 +2,7 @@ package com.aurimas.playground.controller;
 
 import com.aurimas.playground.domain.Attraction;
 import com.aurimas.playground.service.AttractionService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/attractions")
+@Tag(name = "Attraction controller")
 public class AttractionController {
 
   private final AttractionService attractionService;
