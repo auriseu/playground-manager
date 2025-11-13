@@ -24,27 +24,22 @@ public class AttractionController {
   }
 
   @PostMapping
-  public List<Attraction> createAttractions(@RequestBody List<@Valid Attraction> attractions) {
-    return attractionService.createAttractions(attractions);
+  public List<Attraction> createAll(@RequestBody List<@Valid Attraction> attractions) {
+    return attractionService.createAll(attractions);
   }
 
   @PutMapping("/{id}")
-  public Attraction updateAttraction(@PathVariable Long id, @RequestBody @Valid Attraction attractionDetails) {
-    return attractionService.updateAttraction(id, attractionDetails);
-  }
-
-  @GetMapping
-  public List<Attraction> getAllAttractions() {
-    return attractionService.getAllAttractions();
+  public Attraction update(@PathVariable Long id, @RequestBody @Valid Attraction attractionDetails) {
+    return attractionService.update(id, attractionDetails);
   }
 
   @GetMapping("/{id}")
-  public Attraction getAttraction(@PathVariable Long id) {
-    return attractionService.getAttractionById(id);
+  public Attraction get(@PathVariable Long id) {
+    return attractionService.get(id);
   }
 
   @DeleteMapping("/{id}")
   public void deleteAttraction(@PathVariable Long id) {
-    attractionService.deleteAttraction(id);
+    attractionService.delete(id);
   }
 }

@@ -19,7 +19,7 @@ public class AttractionRepository {
     this.dsl = dsl;
   }
 
-  public List<Attraction> saveAll(List<Attraction> attractions) {
+  public List<Attraction> createAll(List<Attraction> attractions) {
     if (attractions.isEmpty()) {
       return List.of();
     }
@@ -46,20 +46,18 @@ public class AttractionRepository {
         .execute();
   }
 
-  public List<Attraction> findAll() {
-    return dsl.selectFrom(ATTRACTION)
-        .fetch()
-        .map(this::mapRecordToDomain);
-  }
-
-  public Optional<Attraction> findById(Long id) {
+  public Optional<Attraction> get(Long id) {
     return dsl.selectFrom(ATTRACTION)
         .where(ATTRACTION.ID.eq(id))
         .fetchOptional()
         .map(this::mapRecordToDomain);
   }
 
-  public void deleteById(Long id) {
+  public boolean exists(Long id) {
+    return dsl.fetchExists(dsl.selectFrom(ATTRACTION).where(ATTRACTION.ID.eq(id)));
+  }
+
+  public void delete(Long id) {
     dsl.deleteFrom(ATTRACTION)
         .where(ATTRACTION.ID.eq(id))
         .execute();

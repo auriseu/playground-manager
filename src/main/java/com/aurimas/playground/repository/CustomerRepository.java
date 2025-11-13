@@ -31,14 +31,18 @@ public class CustomerRepository {
         .fetchSingle(CUSTOMER.ID);
   }
 
-  public Optional<Customer> findById(String id) {
+  public boolean exists(String id) {
+    return dsl.fetchExists(dsl.selectFrom(CUSTOMER).where(CUSTOMER.ID.eq(id)));
+  }
+
+  public Optional<Customer> get(String id) {
     return dsl.selectFrom(CUSTOMER)
         .where(CUSTOMER.ID.eq(id))
         .fetchOptional()
         .map(this::mapRecordToDomain);
   }
 
-  public void deleteById(String id) {
+  public void delete(String id) {
     dsl.deleteFrom(CUSTOMER)
         .where(CUSTOMER.ID.eq(id))
         .execute();

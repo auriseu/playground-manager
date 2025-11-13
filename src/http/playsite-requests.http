@@ -20,24 +20,10 @@ Content-Type: application/json
   "name": "Test play site - The Ultimate"
 }
 
-### Get Playsite
-GET {{baseUrl}}/v1/playsites/{{newPlaysiteId}}
-
 ### Get Playsite info
-GET {{baseUrl}}/v1/playsites/1/info
-
-### Get all playsites
-GET {{baseUrl}}/v1/playsites
+GET {{baseUrl}}/v1/playsites/1
 
 ### Delete playsite
 DELETE {{baseUrl}}/v1/playsites/{{newPlaysiteId}}
-
-### Try to create invalid Playsite
-POST {{baseUrl}}/v1/playsites
-Content-Type: application/json
-
-{
-  "name": ""
-}
 
 

@@ -24,17 +24,17 @@ public class CustomerController {
   }
 
   @PostMapping
-  public Customer createCustomer(@Valid @RequestBody Customer customer) {
-    return customerService.createCustomer(customer);
+  public Customer create(@Valid @RequestBody Customer customer) {
+    return customerService.create(customer);
   }
 
   @GetMapping("/{ticketNumber}")
-  public Customer getCustomer(@PathVariable String ticketNumber) {
-    return customerService.getCustomerByTicketNumber(ticketNumber);
+  public Customer getByTicketNumber(@PathVariable String ticketNumber) {
+    return customerService.getByTicketNumber(ticketNumber);
   }
 
   @DeleteMapping("/{ticketNumber}")
-  public void deleteCustomer(@PathVariable String ticketNumber) {
-    customerService.deleteCustomer(ticketNumber);
+  public void delete(@PathVariable String ticketNumber) {
+    customerService.delete(ticketNumber);
   }
 }

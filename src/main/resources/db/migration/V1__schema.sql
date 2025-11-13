@@ -23,7 +23,7 @@ CREATE TABLE playsite_attractions
 (
     playsite   bigint,
     attraction bigint,
-    amount int,
+    amount     int,
     PRIMARY KEY (playsite, attraction),
     CONSTRAINT chk_amount_positive CHECK (amount > 0),
     CONSTRAINT fk_playsite_attraction_playsite FOREIGN KEY (playsite) REFERENCES playsite (id),
@@ -41,8 +41,9 @@ CREATE TABLE playsite_customers
 
 CREATE TABLE playsite_queue
 (
-    playsite bigint,
-    customer varchar(36),
+    playsite   bigint,
+    customer   varchar(36),
+    added_time timestamp with time zone default now() not null,
     PRIMARY KEY (playsite, customer),
     CONSTRAINT fk_playsite_queue_playsite FOREIGN KEY (playsite) REFERENCES playsite (id),
     CONSTRAINT fk_playsite_queue_customer FOREIGN KEY (customer) REFERENCES customer (id)

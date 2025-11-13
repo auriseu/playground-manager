@@ -23,15 +23,11 @@ Content-Type: application/json
   },
   {
     "name": "Carousel",
-    "maxCapacity": 3
+    "maxCapacity": 1
   },
   {
     "name": "Slide",
-    "maxCapacity": 4
-  },
-  {
-    "name": "Ball pit",
-    "maxCapacity": 5
+    "maxCapacity": 1
   }
 ]
 
@@ -39,7 +35,7 @@ Content-Type: application/json
     client.global.set("attractions", response.body);
 %}
 
-### Add 2 of each attractions to playsite
+### Add attractions to playsite
 < {%
     const attractions = client.global.get("attractions");
 
@@ -47,7 +43,7 @@ Content-Type: application/json
     for (let i = 0; i < attractions.length; i++) {
         allAttractions.push({
             attractionId: attractions[i].id,
-            amount: 2
+            amount: 1
         });
     }
 
@@ -58,6 +54,9 @@ Content-Type: application/json
 
 
 {{attractionsWithAmounts}}
+
+### Get Playsite info
+GET {{baseUrl}}/v1/playsites/{{playsite1}}
 
 ### Create customer 1
 POST {{baseUrl}}/v1/customers
@@ -98,16 +97,58 @@ Content-Type: application/json
     client.global.set("customer3", response.body.ticketNumber);
 %}
 
+### Create customer 4
+POST {{baseUrl}}/v1/customers
+Content-Type: application/json
+
+{
+  "name": "Larry",
+  "age": 40
+}
+
+> {%
+    client.global.set("customer4", response.body.ticketNumber);
+%}
+
+### Create customer 5
+POST {{baseUrl}}/v1/customers
+Content-Type: application/json
+
+{
+  "name": "Diana",
+  "age": 30
+}
+
+> {%
+    client.global.set("customer5", response.body.ticketNumber);
+%}
+
 ### Add customer 1 to playsite
 POST {{baseUrl}}/v1/playsites/{{playsite1}}/customers/{{customer1}}?waitInQueue=true
 
 ### Add customer 2 to playsite
-POST {{baseUrl}}/v1/playsites/{{playsite1}}/customers/{{customer2}}?waitInQueue=false
+POST {{baseUrl}}/v1/playsites/{{playsite1}}/customers/{{customer2}}?waitInQueue=true
 
 ### Add customer 3 to playsite
-POST {{baseUrl}}/v1/playsites/{{playsite1}}/customers/{{customer3}}?waitInQueue=false
+POST {{baseUrl}}/v1/playsites/{{playsite1}}/customers/{{customer3}}?waitInQueue=true
 
+### Add customer 4 to playsite (Should be added to queue)
+POST {{baseUrl}}/v1/playsites/{{playsite1}}/customers/{{customer4}}?waitInQueue=true
 
+### Get Playsite info
+GET {{baseUrl}}/v1/playsites/{{playsite1}}
+
+### Add customer 5 to playsite (Should be rejected)
+POST {{baseUrl}}/v1/playsites/{{playsite1}}/customers/{{customer5}}?waitInQueue=false
+
+### Remove customer 1 from playsite
+DELETE {{baseUrl}}/v1/playsites/{{playsite1}}/customers/{{customer1}}
+
+### Get Playsite info
+GET {{baseUrl}}/v1/playsites/{{playsite1}}
+
+### Get total visitor count
+GET {{baseUrl}}/v1/playground/visitors
 
 
 

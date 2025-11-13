@@ -7,7 +7,9 @@
 ### Tech stack
 * Java
 * Spring boot
-* H2 database
+* JOOQ
+* Flyway
+* H2
 
 ### Usage
 
