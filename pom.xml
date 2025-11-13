@@ -63,6 +63,12 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Documentation-->
         <dependency>
             <groupId>org.springdoc</groupId>
@@ -130,8 +136,7 @@
                     </dependency>
                 </dependencies>
             </plugin>
-
-            <!-- <plugin>
+            <plugin>
                  <groupId>org.apache.maven.plugins</groupId>
                  <artifactId>maven-failsafe-plugin</artifactId>
                  <executions>
@@ -158,7 +163,7 @@
                          </configuration>
                      </execution>
                  </executions>
-             </plugin>-->
+             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -175,6 +180,13 @@
                         <goals>
                             <goal>report</goal>
                         </goals>
+                        <configuration>
+                            <excludes>
+                                <!-- Exclude JOOQ generated schema -->
+                                <exclude>com/aurimas/playground/schema/*</exclude>
+                                <exclude>com/aurimas/playground/schema/**/*</exclude>
+                            </excludes>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>report-aggregate</id>

@@ -4,8 +4,16 @@
 * To verify application tests run command `./mvnw clean verify`
 * To start application run command `./mvnw spring-boot:run`
 
-### Tests and documentation
-* You can test API requests in file [requests.http](src/http/create-test-data.http) or use [swagger](http://localhost:8080/swagger-ui/index.html)
+### Usage
+* Create playsites
+* Create attractions
+* Add attractions to playsites
+* Create customers
+* Add/Remove customers from playsite
+
+### API
+* You can test API requests in file [create-test-data.http](src/http/create-test-data.http) and other files
+* You can use [swagger](http://localhost:8080/swagger-ui/index.html) documentation
 
 ### Tech stack
 * Java
@@ -16,7 +24,8 @@
 * OpenAPI
 
 ### Todo
-* Security
+* Authentication and authorization
+* Remaining unit and integration tests
 * Support for multiple playgrounds
 * Improve jakarta validations and error handling
 

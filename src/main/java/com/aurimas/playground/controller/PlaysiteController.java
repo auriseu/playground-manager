@@ -7,6 +7,7 @@ import com.aurimas.playground.domain.PlaysiteInfo;
 import com.aurimas.playground.service.PlaysiteAttractionService;
 import com.aurimas.playground.service.PlaysiteCustomerService;
 import com.aurimas.playground.service.PlaysiteService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
@@ -26,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/playsites")
-@Tag(name = "Playsite controller")
+@Tag(name = "Playsite Management", description = "Manage playsites, attractions, and customer flow (entry/queue)")
 public class PlaysiteController {
 
   private final PlaysiteService playsiteService;
@@ -42,26 +43,31 @@ public class PlaysiteController {
     this.playsiteCustomerService = playsiteCustomerService;
   }
 
+  @Operation(summary = "Creates a new playsite")
   @PostMapping
   public Playsite create(@RequestBody @Valid Playsite playsite) {
     return playsiteService.create(playsite);
   }
 
+  @Operation(summary = "Updates the name of an existing playsite")
   @PutMapping("/{id}")
   public Playsite update(@PathVariable Long id, @RequestBody @Valid Playsite playsiteDetails) {
     return playsiteService.update(id, playsiteDetails);
   }
 
+  @Operation(summary = "Gets full playsite information")
   @GetMapping("/{id}")
   public PlaysiteInfo getInfo(@PathVariable Long id) {
     return playsiteService.getInfo(id);
   }
 
+  @Operation(summary = "Deletes a playsite")
   @DeleteMapping("/{id}")
   public void delete(@PathVariable Long id) {
     playsiteService.delete(id);
   }
 
+  @Operation(summary = "Adds attractions to a playsite's inventory")
   @PostMapping("/{playsiteId}/attractions")
   public void addAttractions(
       @PathVariable Long playsiteId,
@@ -70,6 +76,7 @@ public class PlaysiteController {
     playsiteAttractionService.addAttractionsToPlaysite(playsiteId, attractions);
   }
 
+  @Operation(summary = "Adds a customer to a playsite or its queue")
   @PostMapping("/{playsiteId}/customers/{ticketNumber}")
   public ResponseEntity<CustomerStatus> addCustomerToPlaysite(
       @PathVariable Long playsiteId,
@@ -86,11 +93,13 @@ public class PlaysiteController {
     };
   }
 
+  @Operation(summary = "Removes a customer from the playsite and processes the queue")
   @DeleteMapping("/{playsiteId}/customers/{ticket}")
   public List<CustomerStatus> removeCustomerFromPlaysite(@PathVariable Long playsiteId, @PathVariable String ticket) {
     return playsiteCustomerService.removeCustomerFromPlaysite(playsiteId, ticket);
   }
 
+  @Operation(summary = "Removes a customer directly from the queue")
   @DeleteMapping("/{playsiteId}/customers/{ticket}/queue")
   public void removeCustomerFromQueue(@PathVariable Long playsiteId, @PathVariable String ticket) {
     playsiteCustomerService.removeCustomerFromQueue(playsiteId, ticket);
