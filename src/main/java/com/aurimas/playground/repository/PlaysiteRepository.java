@@ -142,10 +142,4 @@ public class PlaysiteRepository {
               r.get(attractions));
         });
   }
-
-  public Integer getTotalVisitorCount() {
-    return dsl.selectCount()
-        .from(PLAYSITE_CUSTOMERS)
-        .fetchOne(0, Integer.class);
-  }
 }
