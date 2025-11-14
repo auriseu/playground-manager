@@ -27,7 +27,8 @@
 * Authentication and authorization
 * Remaining unit and integration tests
 * Support for multiple playgrounds
-* Improve jakarta validations and error handling
+* Improved error handling in controller advice for jakarta and other operations
+* More detailed swagger documentation
 
 ### Task
 Create a playground REST API
