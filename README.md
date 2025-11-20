@@ -21,7 +21,7 @@
 * JOOQ
 * Flyway
 * H2
-* OpenAPI
+* OpenAPI/Swagger
 
 ### Todo
 * Authentication and authorization

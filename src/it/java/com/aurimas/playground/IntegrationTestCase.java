@@ -11,7 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 @ActiveProfiles("integration-test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class IntegrationTestCase {
+public class IntegrationTestCase {
 
   @Autowired
   private DSLContext dsl;
